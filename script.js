@@ -134,7 +134,17 @@ const winGame = ()=>{
             playerWin = true;
         }
     }
+
+    if(gameBoard[0][2] !== "" && gameBoard[0][2] === gameBoard[1][1] && gameBoard[0][2] === gameBoard[2][0] && gameBoard[1][1] === gameBoard[2][0]){
+        playerWin = true;
+    }
+    if(gameBoard[0][0] !== "" && gameBoard[0][0] === gameBoard[1][1] && gameBoard[0][0] === gameBoard[2][2] && gameBoard[1][1] === gameBoard[2][2]){
+        playerWin = true;
+    }
+    
 }
+
+
 
 const dialog = document.getElementById("dialog");
 const displayWin = (player)=>{
@@ -150,5 +160,6 @@ const displayWin = (player)=>{
     closeBtn.addEventListener("click", ()=>{
         dialog.close();
     })
+    
 }
 
