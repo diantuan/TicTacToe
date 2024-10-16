@@ -63,11 +63,21 @@ function updateBoard(element, boxNumber){
     removedContent = [];
     
     
+    if(idHistory.length > 0){
+        prev.classList.remove("fade");
+    }
+    next.classList.add("fade");
+
+
+
+
     winGame();
     console.log(playerWin)
     if(playerWin){
         displayWin(element.textContent);
     }
+
+
 }
 
 createBoard();
@@ -98,6 +108,14 @@ prev.addEventListener("click", ()=>{
         
         playerTurn1 = !playerTurn1;
         console.log(gameBoard)
+
+        if(idHistory.length < 1){
+            prev.classList.add("fade")
+        }
+
+        next.classList.remove("fade");
+
+        
     }
    
 })
@@ -117,7 +135,14 @@ next.addEventListener("click", ()=>{
         idHistory.push(boxId);
         playerTurn1 = !playerTurn1;
         console.log(gameBoard)
+
+        if(removedIds.length < 1){
+            next.classList.add("fade");
+        }
+
+        prev.classList.remove("fade")
     }
+    
     
 })
 
