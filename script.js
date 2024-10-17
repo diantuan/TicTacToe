@@ -16,10 +16,15 @@ let removedColumns = [];
 let removedIds = [];
 let removedContent = [];
 
-let playerWin = false;
 
+let playerWin = false;
+let stopGame = false;
 
 let playerTurn1 = true;
+
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+
 
 function createBoard(){
     for(let i=0; i<9;i++){
@@ -29,7 +34,9 @@ function createBoard(){
         board.appendChild(boardItem);
        
         boardItem.addEventListener("click", ()=>{
+            if(!stopGame){
             addMove(boardItem.id, i)
+            }
         })
     }
 
@@ -45,6 +52,8 @@ function addMove(element, boxNumber){
         boarditem.textContent = "O";
         playerTurn1 = true;
     }
+    
+    
     updateBoard(boarditem, boxNumber)
 }
 
@@ -75,6 +84,8 @@ function updateBoard(element, boxNumber){
     console.log(playerWin)
     if(playerWin){
         displayWin(element.textContent);
+        stopGame = true;
+
     }
 
 
@@ -83,8 +94,6 @@ function updateBoard(element, boxNumber){
 createBoard();
 
 
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
 
 
 
@@ -147,44 +156,76 @@ next.addEventListener("click", ()=>{
 })
 
 const winGame = ()=>{
-    
-    for(let i=0; i<gameBoard.length; i++){
-       if(gameBoard[i][0] !=="" && gameBoard[i][0] === gameBoard[i][1] && gameBoard[i][0] === gameBoard[i][2] && gameBoard[i][1]===gameBoard[i][2]){
-        playerWin = true;
-       }
-    }
+    if(!stopGame){
+        for(let i=0; i<gameBoard.length; i++){
+        if(gameBoard[i][0] !=="" && gameBoard[i][0] === gameBoard[i][1] && gameBoard[i][0] === gameBoard[i][2] && gameBoard[i][1]===gameBoard[i][2]){
+            playerWin = true;
+            
+        }
+        }
 
-    for(let i = 0; i<3; i++){
-        if(gameBoard[0][i] !== "" && gameBoard[0][i] === gameBoard[1][i] && gameBoard[0][i] === gameBoard[2][i] && gameBoard[1][i] === gameBoard[2][i]){
+        for(let i = 0; i<3; i++){
+            if(gameBoard[0][i] !== "" && gameBoard[0][i] === gameBoard[1][i] && gameBoard[0][i] === gameBoard[2][i] && gameBoard[1][i] === gameBoard[2][i]){
+                playerWin = true;
+            }
+        }
+
+        if(gameBoard[0][2] !== "" && gameBoard[0][2] === gameBoard[1][1] && gameBoard[0][2] === gameBoard[2][0] && gameBoard[1][1] === gameBoard[2][0]){
+            playerWin = true;
+        }
+        if(gameBoard[0][0] !== "" && gameBoard[0][0] === gameBoard[1][1] && gameBoard[0][0] === gameBoard[2][2] && gameBoard[1][1] === gameBoard[2][2]){
             playerWin = true;
         }
     }
-
-    if(gameBoard[0][2] !== "" && gameBoard[0][2] === gameBoard[1][1] && gameBoard[0][2] === gameBoard[2][0] && gameBoard[1][1] === gameBoard[2][0]){
-        playerWin = true;
-    }
-    if(gameBoard[0][0] !== "" && gameBoard[0][0] === gameBoard[1][1] && gameBoard[0][0] === gameBoard[2][2] && gameBoard[1][1] === gameBoard[2][2]){
-        playerWin = true;
+    else{
+        playerWin = false;
     }
     
 }
+
+const resetBtn = document.getElementById("reset");
+const resetGame = ()=>{
+    idHistory = [];
+    rowHistory = [];
+    columnHistory = [];
+    contentHistory = [];
+    removedIds=[] ;
+    removedRows =[];
+    removedColumns =[];
+    removedContent =[];   
+    stopGame = false;
+    playerWin = false;
+
+    for(let i=0; i<gameBoard.length; i++){
+        for(let j=0; j<3; j++){
+            gameBoard[i][j] = "";
+        }
+            
+    }
+
+    for(let i=0;i<9;i++){
+        document.getElementById(`box-${i}`).textContent = "";
+    }
+
+    console.log(gameBoard);
+    prev.classList.add("fade");
+    next.classList.add("fade");
+}
+    
+
+
+resetBtn.addEventListener("click", resetGame);
 
 
 
 const dialog = document.getElementById("dialog");
 const displayWin = (player)=>{
     
-    const dialogWin = document.createElement("div");
-    dialogWin.textContent = `Congrats! ${player} wins!`;
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Close";
-    dialog.appendChild(dialogWin);
-    dialog.appendChild(closeBtn);
+    dialog.innerHTML = `<div>Congrats! ${player} won!</div>
+                        <button onclick="dialog.close()">Close</button> `
     dialog.showModal();
 
-    closeBtn.addEventListener("click", ()=>{
-        dialog.close();
-    })
+   
     
 }
 

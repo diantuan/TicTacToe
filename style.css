@@ -1,26 +1,105 @@
-#container {
-    width: 100%;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 18px;
+    font-family: "Helvetica Neue", sans-serif;
+    background-color: #e0f7fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
 }
 
 #title {
+    color: #ab47bc;
     text-align: center;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-style: italic;
+    z-index: 1;
+}
+
+#container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
 }
 
 #board {
-    background-color: rgb(247, 247, 247);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 150px;
-    height: 150px;
+    width: 40%;
+    aspect-ratio: 1 / 1;
     margin: auto;
+    border-radius: 15px;
+    background-color: #e0f7fa;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .tictactoeBox {
-    width: 49px;
-    height: 49px;
-    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ff4081;
+    text-align: center;
+    font-size: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10%;
+    transition: background-color 0.3s, transform 0.2s;
+    background-color: #f8bbd0;
+    aspect-ratio: 1/1;
 }
 
-.fade{
-    opacity: 50%;
+.tictactoeBox:hover {
+    background-color: #f06292;
+    transform: scale(1.05);
+}
+
+#prev-next-container {
+    text-align: center;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #81d4fa;
+    color: #ab47bc;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #4fc3f7;
+    transform: scale(1.05);
+}
+
+.fade {
+    opacity: 0.5;
+}
+
+dialog {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-family: "Courier New", monospace;
 }
